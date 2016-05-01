@@ -12,7 +12,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 	*new {
 		| key item numChannels=2 wavetable |
 		/* you can create a new Bdef in a variety of ways:
-			* Bdef(\name, Env([0.5, 1, 0.5, 0, 0.5], 0.25!4, [-3, 3, -3, 3])); // i.e. for making a wavetable buffer.
+			* Bdef(\name, Env([0.5, 1, 0.5, 0, 0.5], 0.25!4, 0)); // i.e. for making a wavetable buffer.
 			* Bdef(\name, "~/foo.wav"); // i.e. for loading a sound from disk.
 			* Bdef("~/foo.wav"); // also works for loading a sound from disk!
 			* Bdef(\name, "~/bar.mp3"); // automatically converts songs into a SuperCollider-usable format!
@@ -232,37 +232,5 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 	}
 	play {
 		this.buffer.play;
-	}
-}
-
-+ Symbol {
-	b {
-		^Bdef(this).buffer;
-	}
-	bd {
-		^Bdef(this);
-	}
-	bdef {
-		^Bdef(this);
-	}
-}
-
-+ String {
-	b {
-		^this.bd(numChannels:2).buffer;
-	}
-	bm {
-		^this.bd(numChannels:1).buffer;
-	}
-	bw {
-		^this.bd(numChannels:1, wavetable:true).buffer;
-	}
-	bd {
-		| item numChannels wavetable |
-		^Bdef(this, item, numChannels, wavetable);
-	}
-	bdef {
-		| item numChannels wavetable |
-		^Bdef(this, item, numChannels, wavetable);
 	}
 }
