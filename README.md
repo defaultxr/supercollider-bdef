@@ -15,6 +15,7 @@ Bdef is a class used to create "Buffer definitions" which are similar in concept
 ### Disadvantages
 
 - A Bdef can't be provided directly as a parameter to PlayBuf, etc. You have to call .buffer or .bufnum on the Bdef to get its Buffer object, which can then be used by PlayBuf, etc.
+- If you load a Buffer using Bdef, then you will have to free it via Bdef as well, otherwise Bdef will not know it has been freed.
 - This quark is still under development and probably has some bugs, in addition to the missing features listed under "Current Issues" below.
 
 ## Examples
@@ -54,3 +55,9 @@ SynthDef(\hihat, {
 - Only 1- and 2-channel Buffers and files are supported.
 - No helpfile yet.
 - Sclang will hang while a file is being converted to wav.
+- Will load 2 copies of a buffer if you do this:
+
+```supercollider
+"/path/to/foo.wav".b;
+Bdef(\bar, "/path/to/foo.wav");
+```
