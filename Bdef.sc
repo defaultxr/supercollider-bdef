@@ -24,7 +24,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 		// ^super.new.init(key, item, numChannels, wavetable);
 		if(item.isNil, {
 			if(key.isKindOf(String), { // assume strings are paths. Anytime a file is loaded, it's stored under its own name in the 'all' dict.
-				key = key.p.convertToWav;
+				key = key.standardizePath.convertToWav;
 				if(wavetable.isNil, {
 					if(all[key].isNil, {
 						Bdef.read(path:key, numChannels:numChannels);
@@ -52,7 +52,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 		}, { // set the value cuz item was provided
 			case(
 				{ item.isKindOf(String) }, { // we assume the string is a path.
-					item = item.p; // FIX: check/handle if trying to load as a wavetable!
+					item = item.standardizePath; // FIX: check/handle if trying to load as a wavetable!
 					if(wavetable.isNil, {
 						if(all[item].isNil, {
 							Bdef.read(path:item, numChannels:numChannels, startFrame:startFrame);
@@ -88,7 +88,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 	}
 	*collect {
 		| path=("sounds/*") |
-		var sfs = SoundFile.collect(path.p);
+		var sfs = SoundFile.collect(path.standardizePath);
 		^sfs.collect({
 			| sf |
 			Bdef(sf.path);
@@ -97,7 +97,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 	*read { // FIX: just load the file into a Buffer and return the Buffer, don't do anything with the 'all' dict here.
 		| server=(Server.default) path startFrame=0 numFrames=(-1) action bufnum numChannels |
 		var sf, wavpath;
-		path = path.p;
+		path = path.standardizePath;
 		wavpath = path.convertToWav;
 		sf = SoundFile.openRead(wavpath);
 		if(all[path].notNil, {
