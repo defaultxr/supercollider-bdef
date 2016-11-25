@@ -12,21 +12,23 @@
 
 + String {
 	b {
-		^this.bd(numChannels:2).buffer;
+		| startFrame=0 |
+		^this.bd(numChannels:2, startFrame:startFrame).buffer;
 	}
 	bm {
-		^this.bd(numChannels:1).buffer;
+		| startFrame=0 |
+		^this.bd(numChannels:1, startFrame:startFrame).buffer;
 	}
 	bw {
 		^this.bd(numChannels:1, wavetable:true).buffer;
 	}
 	bd {
-		| item numChannels wavetable |
-		^Bdef(this, item, numChannels, wavetable);
+		| item numChannels wavetable startFrame=0 |
+		^Bdef(this, item, numChannels, wavetable, startFrame:startFrame);
 	}
 	bdef {
-		| item numChannels wavetable |
-		^Bdef(this, item, numChannels, wavetable);
+		| item numChannels wavetable startFrame=0 |
+		^Bdef(this, item, numChannels, wavetable, startFrame:startFrame);
 	}
 }
 

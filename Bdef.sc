@@ -10,7 +10,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 	}
 	*hasGlobalDictionary { ^true; }
 	*new {
-		| key item numChannels=2 wavetable |
+		| key item numChannels=2 wavetable startFrame=0 |
 		/* you can create a new Bdef in a variety of ways:
 			* Bdef(\name, Env([0.5, 1, 0.5, 0, 0.5], 0.25!4, 0)); // i.e. for making a wavetable buffer.
 			* Bdef(\name, "~/foo.wav"); // i.e. for loading a sound from disk.
@@ -55,7 +55,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 					item = item.p; // FIX: check/handle if trying to load as a wavetable!
 					if(wavetable.isNil, {
 						if(all[item].isNil, {
-							Bdef.read(path:item, numChannels:numChannels);
+							Bdef.read(path:item, numChannels:numChannels, startFrame:startFrame);
 						});
 					}, {
 						Bdef(item, numChannels:numChannels, wavetable:wavetable);
@@ -212,7 +212,7 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 		^Server.default;
 	}
 	bufnum {
-		^this.bufnum;
+		^this.buffer.bufnum;
 	}
 	numFrames {
 		^this.buffer.numFrames;
@@ -232,5 +232,8 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 	}
 	play {
 		this.buffer.play;
+	}
+	plot {
+		this.buffer.plot;
 	}
 }
