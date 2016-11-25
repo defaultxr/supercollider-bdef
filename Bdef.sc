@@ -227,8 +227,14 @@ Bdef { // Buffer definition, a la Ndef, Pdef, Tdef, etc., except it's for Buffer
 		^this.buffer.path;
 	}
 	free {
-		"Not done yet".warn; // FIX
-		this.buffer.free;
+		var buffer = this.buffer;
+		Bdef.all.keys.do({
+			| key |
+			if(Bdef.all[key].bufnum == buffer.bufnum, {
+				Bdef.all.removeAt(key);
+			});
+		});
+		buffer.free;
 	}
 	play {
 		this.buffer.play;

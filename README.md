@@ -47,9 +47,8 @@ SynthDef(\hihat, {
 
 ...It's that easy!
 
-## Current Issues
+## Current Known Issues
 
-- Freeing Bdefs/Buffers doesn't work yet.
 - No equivalent of allocConsecutive is provided yet (in the future, you'll be able to provide an Array for Bdef.new's value parameter, and the items of the Array will be loaded in consecutive Buffers).
 - If you specify numChannels:1 on a file that has more than 1 channel, only the first channel is loaded. Ideally, the channels would be mixed together.
 - Only 1- and 2-channel Buffers and files are supported.
