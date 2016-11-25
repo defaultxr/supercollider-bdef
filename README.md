@@ -3,18 +3,19 @@ SuperCollider class to create Buffer definitions, a la Ndef, Pdef, etc.
 
 ## Overview
 
-Bdef is a class used to create "Buffer definitions" which are similar in concept to the Node and Pattern definitions that can be created with Ndef and Pdef. The 
+Bdef is a class used to create "Buffer definitions" which are similar in concept to the Node and Pattern definitions that can be created with Ndef and Pdef.
 
 ### Advantages
 
 - No duplicate Buffers: if you attempt to use Bdef to load a file that's already loaded, Bdef will simply point you to the Buffer that already contains the file.
 - Easy creation of wavetables: similar to how you can load a file, you can supply an envelope instead and it's automatically created as a wavetable for you.
 - No need to define a variable to hold the buffer: Bdef has its own internal namespace Dictionary that you reference with the key you gave to the Bdef when creating it. Additionally, you can use a file's name as its own key.
-- Bdef can automatically convert from a few common compressed formats for you, storing the resulting .wav file in a temporary directory.
+- If you have ffmpeg installed, Bdef will automatically attempt to convert non-wav/aiff files to wav for you, storing the resulting file in a temporary directory.
 
 ### Disadvantages
 
 - A Bdef can't be provided directly as a parameter to PlayBuf, etc. You have to call .buffer or .bufnum on the Bdef to get its Buffer object, which can then be used by PlayBuf, etc.
+- This quark is still under development and probably has some bugs, in addition to the missing features listed under "Current Issues" below.
 
 ## Examples
 
@@ -52,3 +53,4 @@ SynthDef(\hihat, {
 - If you specify numChannels:1 on a file that has more than 1 channel, only the first channel is loaded. Ideally, the channels would be mixed together.
 - Only 1- and 2-channel Buffers and files are supported.
 - No helpfile yet.
+- Sclang will hang while a file is being converted to wav.
